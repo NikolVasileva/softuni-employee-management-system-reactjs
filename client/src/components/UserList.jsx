@@ -75,7 +75,7 @@ export default function UserList() {
                 <tbody>
                    {users.map(user => <UserItem 
                    {...user}
-                   key={user.id}
+                   key={user._id}
                    />
                    )}
 
