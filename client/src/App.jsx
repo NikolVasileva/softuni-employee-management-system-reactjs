@@ -7,8 +7,21 @@ function App() {
   return (
     <div>
       <Header />
-      <main>
+
+      <main className="main">
+        <section className="card users-container">
+          <Search />
+
+          <UserList />
+
+          <button className="btn-add btn">Add new user</button>
+
+          <Pagination />
+        </section>
+
+        <UserSaveModal />
       </main>
+
       <Footer />
     </div>
   )
