@@ -4,10 +4,16 @@ import Header from "./components/Header.jsx"
 import Pagination from "./components/Pagination.jsx"
 import Search from "./components/Search.jsx"
 import UserList from "./components/UserList.jsx"
+import CreateUserModal from "./components/CreateUserModal.jsx"
 
 function App() {
 
   const [users, setUsers] = useState([])
+  const [showCreateUser, setCreateUser] = useState(false);
+
+  const addUserClickHandler = () => {
+    setCreateUser(true)
+  }
 
   useEffect(() => {
     fetch("http://localhost:3030/jsonstore/users")
@@ -28,10 +34,11 @@ function App() {
 
           <UserList users={users}/>
 
-          <button className="btn-add btn">Add new user</button>
+          <button onClick={addUserClickHandler} className="btn-add btn">Add new user</button>
 
           <Pagination />
         </section>
+        {showCreateUser && <CreateUserModal />}
       </main>
 
       <Footer />
