@@ -5,10 +5,12 @@ import Header from "./components/Header.jsx"
 function App() {
 
   return (
-    <main>
+    <div>
       <Header />
+      <main>
+      </main>
       <Footer />
-    </main>
+    </div>
   )
 }
 
