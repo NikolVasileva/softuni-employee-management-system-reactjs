@@ -1,8 +1,20 @@
+import { useState } from "react";
+import { useEffect } from "react";
 import UserItem from "./UserItem";
 
-export default function UserList({
-    users
-}) {
+export default function UserList() {
+
+    const [users, setUsers] = useState([])
+  
+    useEffect(() => {
+      fetch("http://localhost:3030/jsonstore/users")
+        .then(response => response.json())
+        .then(data => {
+          setUsers(Object.values(data))
+        })
+        .catch(err => console.log(err.message))
+    }, [])
+
     return (
         <div className="table-wrapper">
             <table className="table">

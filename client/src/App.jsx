@@ -7,22 +7,12 @@ import UserList from "./components/UserList.jsx"
 import CreateUserModal from "./components/CreateUserModal.jsx"
 
 function App() {
-
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const [showCreateUser, setCreateUser] = useState(false);
-
+  
   const addUserClickHandler = () => {
     setCreateUser(true)
   }
-
-  useEffect(() => {
-    fetch("http://localhost:3030/jsonstore/users")
-      .then(response => response.json())
-      .then(data => {
-        setUsers(Object.values(data))
-      })
-      .catch(err => console.log(err.message))
-  }, [])
 
   return (
     <div>
