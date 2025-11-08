@@ -1,9 +1,14 @@
+import Footer from "./components/Footer.jsx"
+import Header from "./components/Header.jsx"
 
 
 function App() {
 
   return (
-    <div>Test</div>
+    <main>
+      <Header />
+      <Footer />
+    </main>
   )
 }
 
