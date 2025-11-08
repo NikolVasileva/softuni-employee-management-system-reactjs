@@ -1,8 +1,22 @@
+import { useEffect, useState } from "react"
 import Footer from "./components/Footer.jsx"
 import Header from "./components/Header.jsx"
-
+import Pagination from "./components/Pagination.jsx"
+import Search from "./components/Search.jsx"
+import UserList from "./components/UserList.jsx"
 
 function App() {
+
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:3030/jsonstore/users")
+      .then(response => response.json())
+      .then(data => {
+        setUsers(Object.values(data))
+      })
+      .catch(err => console.log(err.message))
+  }, [])
 
   return (
     <div>
@@ -18,8 +32,6 @@ function App() {
 
           <Pagination />
         </section>
-
-        <UserSaveModal />
       </main>
 
       <Footer />
