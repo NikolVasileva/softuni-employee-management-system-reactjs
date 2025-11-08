@@ -8,10 +8,14 @@ import CreateUserModal from "./components/CreateUserModal.jsx"
 
 function App() {
   const [users, setUsers] = useState([]);
-  const [showCreateUser, setCreateUser] = useState(false);
+  const [showCreateUser, setShowCreateUser] = useState(false);
   
   const addUserClickHandler = () => {
-    setCreateUser(true)
+    setShowCreateUser(true)
+  }
+
+  const closeUserModalHandler = () => {
+    setShowCreateUser(false)
   }
 
   return (
@@ -28,7 +32,10 @@ function App() {
 
           <Pagination />
         </section>
-        {showCreateUser && <CreateUserModal />}
+
+        {showCreateUser && <CreateUserModal 
+        onClose={closeUserModalHandler}
+        />}
       </main>
 
       <Footer />
