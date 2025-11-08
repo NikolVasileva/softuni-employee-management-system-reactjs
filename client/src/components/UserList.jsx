@@ -1,4 +1,8 @@
-export default function UserList() {
+import UserItem from "./UserItem";
+
+export default function UserList({
+    users
+}) {
     return (
         <div className="table-wrapper">
             <table className="table">
@@ -57,7 +61,11 @@ export default function UserList() {
                     </tr>
                 </thead>
                 <tbody>
-                   
+                   {users.map(user => <UserItem 
+                   {...user}
+                   key={user.id}
+                   />
+                   )}
 
                 </tbody>
             </table>

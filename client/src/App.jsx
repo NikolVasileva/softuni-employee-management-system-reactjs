@@ -26,7 +26,7 @@ function App() {
         <section className="card users-container">
           <Search />
 
-          <UserList />
+          <UserList users={users}/>
 
           <button className="btn-add btn">Add new user</button>
 
