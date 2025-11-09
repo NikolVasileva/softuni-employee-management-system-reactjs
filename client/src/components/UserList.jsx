@@ -1,12 +1,15 @@
 import { useState } from "react";
 import UserItem from "./UserItem";
 import UserDetails from "./UserDetails";
+import UserDeleteModal from "./UserDeleteModal.jsx";
 
 export default function UserList({
     users,
+    forceUserRefresh,
 }) {
     const [showUserDetails, setShowUserDetails] = useState(false);
     const [selectUserId, setSelectUserId] = useState(null);
+    const [showUserDelete, setShowUserDelete] = useState(false)
 
     const detailsActionClickHandler = (userId) => {
         setShowUserDetails(true);
@@ -14,7 +17,14 @@ export default function UserList({
     };
 
     const closeModalHandler = () => {
-        setShowUserDetails(false)
+        setShowUserDetails(false);
+        setShowUserDelete(false);
+        setSelectUserId(null)
+    }
+
+    const deleteActionClickHandler = (userId) => {
+        setSelectUserId(userId)
+        setShowUserDelete(true)
     }
 
     return (
@@ -75,19 +85,27 @@ export default function UserList({
                     </tr>
                 </thead>
                 <tbody>
-                {users.map(user => (
+                    {users.map(user => (
                         <UserItem
                             {...user}
                             key={user._id}
                             onDetailsClick={detailsActionClickHandler}
+                            onDeleteClick={deleteActionClickHandler}
                         />
                     ))}
                 </tbody>
             </table>
-            {showUserDetails && <UserDetails 
-            userId={selectUserId}
-            onClose={closeModalHandler}
-            />}
+            {showUserDetails && (<UserDetails
+                userId={selectUserId}
+                onClose={closeModalHandler}
+            />)}
+            {showUserDelete && (
+                <UserDeleteModal
+                    userId={selectUserId}
+                    onClose={closeModalHandler}
+                    forceUserRefersh={forceUserRefresh}
+                />
+            )}
         </div>
     );
 }

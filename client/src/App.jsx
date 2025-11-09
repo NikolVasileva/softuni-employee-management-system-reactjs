@@ -9,7 +9,7 @@ import CreateUserModal from "./components/CreateUserModal.jsx"
 function App() {
   const [users, setUsers] = useState([]);
   const [showCreateUser, setShowCreateUser] = useState(false);
-  const [forceRefresh, setForceRefresh] = useState(true);
+  const [refresh, setRefresh] = useState(true);
 
     
   useEffect(() => {
@@ -19,7 +19,11 @@ function App() {
         setUsers(Object.values(data))
       })
       .catch(err => console.log(err.message))
-  }, [forceRefresh])
+  }, [refresh])
+
+  const forceUserRefresh = () => {
+    setRefresh(state => !state)
+  }
   
   const addUserClickHandler = () => {
     setShowCreateUser(true)
@@ -49,15 +53,17 @@ function App() {
     fetch("http://localhost:3030/jsonstore/users", {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
       },
       body: JSON.stringify(userData)
     })
-    .then(() => 
-      closeUserModalHandler(),
-      setForceRefresh(state => !state))
-    .catch(err => alert(err.message))
-  }
+    .then(() => {
+      closeUserModalHandler()
+      forceUserRefresh()
+    
+  })
+  .catch(err => alert(err.message))
+}
 
   return (
     <div>
@@ -67,7 +73,8 @@ function App() {
         <section className="card users-container">
           <Search />
 
-          <UserList users={users}/>
+          <UserList users={users}
+          forceUserRefresh={forceUserRefresh}/>
 
           <button onClick={addUserClickHandler} className="btn-add btn">Add new user</button>
 
