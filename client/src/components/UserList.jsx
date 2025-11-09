@@ -6,7 +6,7 @@ import EditUserModal from "./EditUserModal.jsx";
 
 export default function UserList({
     users,
-    forceUserRefresh,
+    forceUserRefresh
 }) {
     const [showUserDetails, setShowUserDetails] = useState(false);
     const [selectUserId, setSelectUserId] = useState(null);
@@ -20,7 +20,38 @@ export default function UserList({
     const editActionClickHandler = (userId) => {
         setSelectUserId(userId);
         setShowEditUser(true)
+
     }
+    const editUserHandler = async (event, userId) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+
+        const { country, city, street, streetNumber, ...userData } = Object.fromEntries(formData);
+
+        userData.address = {
+            country,
+            city,
+            street,
+            streetNumber,
+        };
+
+        userData.updatedAt = new Date().toISOString();
+
+        try {
+            await fetch(`http://localhost:3030/jsonstore/users/${userId}`, {
+                method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+            forceUserRefresh()
+            closeModalHandler();
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
     const closeModalHandler = () => {
         setShowUserDetails(false);
@@ -117,7 +148,7 @@ export default function UserList({
             {showEditUser && (
                 <EditUserModal 
                 userId={selectUserId}
-                onEdit={editActionClickHandler}
+                onEdit={editUserHandler}
                 onClose={closeModalHandler}
                 forceUserRefersh={forceUserRefresh}
                 />
