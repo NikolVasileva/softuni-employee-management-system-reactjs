@@ -26,6 +26,7 @@ export default function UserList({
         setShowUserDetails(false);
         setShowUserDelete(false);
         setSelectUserId(null)
+        setShowEditUser(false)
     }
 
     const deleteActionClickHandler = (userId) => {
